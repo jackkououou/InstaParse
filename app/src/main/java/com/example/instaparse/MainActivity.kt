@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btOpenCam).setOnClickListener {
             onLaunchCamera()
         }
+        findViewById<Button>(R.id.btLogout).setOnClickListener {
+            logOutUser()
+        }
         queryPosts()
     }
 
@@ -140,6 +143,15 @@ class MainActivity : AppCompatActivity() {
 
         // Return the file target for the photo based on filename
         return File(mediaStorageDir.path + File.separator + fileName)
+    }
+
+    fun logOutUser() {
+        ParseUser.logOut()
+        Toast.makeText(this , "Logging out", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
     companion object {

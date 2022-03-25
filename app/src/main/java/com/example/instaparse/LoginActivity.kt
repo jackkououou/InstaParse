@@ -11,6 +11,7 @@ import com.parse.ParseObject
 import com.parse.ParseUser
 
 class LoginActivity : AppCompatActivity() {
+    var currentUser: ParseUser? = ParseUser.getCurrentUser()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -26,7 +27,9 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.etPassword).text.toString()
             signUpUser(username, password)
         }
-
+        if (currentUser != null) {
+            goToMainActivity()
+        }
     }
 
     private fun signUpUser(username: String, password: String) {
@@ -37,11 +40,13 @@ class LoginActivity : AppCompatActivity() {
 
         user.signUpInBackground { e ->
             if (e == null) {
-                //Log.i(TAG, "User has successfully signed up and logged in")
-                //Nav to main activity
-                //show successfully sign up
+                Log.i(TAG, "User has successfully signed up and logged in")
+                Toast.makeText(this, "Successfully signed up!", Toast.LENGTH_SHORT).show()
+                goToMainActivity()
             } else {
-                //Signup was not succesfull
+                e.printStackTrace()
+                Toast.makeText(this, "Could not sign up user", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "User was not signed up")
             }
 
         }
