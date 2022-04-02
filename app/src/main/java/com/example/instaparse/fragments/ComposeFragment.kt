@@ -47,9 +47,8 @@ class ComposeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO set on click listenr and logic
 
-        ivPreview = view.findViewById<ImageView>(R.id.imageView)
+        ivPreview = view.findViewById(R.id.imageView)
 
         view.findViewById<Button>(R.id.btSubmit).setOnClickListener {
 
@@ -66,9 +65,6 @@ class ComposeFragment : Fragment() {
         }
         view.findViewById<Button>(R.id.btOpenCam).setOnClickListener {
             onLaunchCamera()
-        }
-        view.findViewById<Button>(R.id.btLogout).setOnClickListener {
-            logOutUser()
         }
     }
 
@@ -154,14 +150,6 @@ class ComposeFragment : Fragment() {
         }
     }
 
-    fun logOutUser() {
-//        ParseUser.logOut()
-//        Toast.makeText(requireContext() , "Logging out", Toast.LENGTH_SHORT).show()
-//        val intent = Intent(requireContext(), LoginActivity::class.java)
-//        startActivity(intent)
-//        finish()
-
-    }
 
     companion object {
         private const val TAG = "ComposeFragment"

@@ -9,15 +9,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.instaparse.fragments.ComposeFragment
 import com.example.instaparse.fragments.HomeFragment
+import com.example.instaparse.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.ByteArrayOutputStream
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val fragmentManager: FragmentManager = supportFragmentManager
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -46,8 +51,7 @@ class MainActivity : AppCompatActivity() {
                     fragmentToShow = ComposeFragment()
                 }
                 R.id.action_profile -> {
-                    //TODO nav to profile screen
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    fragmentToShow = ProfileFragment()
                 }
             }
 
@@ -58,30 +62,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView.selectedItemId = R.id.action_home
-        //queryPosts()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_action_bar, menu);
+        return true;
+    }
 
-
-    //query for all posts on server
-    fun queryPosts() {
-        val query: ParseQuery<Post> = ParseQuery.getQuery(Post::class.java)
-
-        query.include(Post.KEY_USER)
-        query.findInBackground(object: FindCallback<Post> {
-            override fun done(posts: MutableList<Post>?, e: ParseException?) {
-                if(e != null) {
-                    //something went wrong
-                    Log.e(TAG, "Error fetching posts")
-                } else {
-                    if (posts != null) {
-                        for (post in posts) {
-                            Log.i(TAG, "Post: " + post.getDescription() +", username: "+ post.getUser())
-                        }
-                    }
-                }
-            }
-        })
+    fun onLogoutAction (mi: MenuItem) {
+        if (mi.itemId == R.id.miLogOut) {
+            ParseUser.logOut()
+            Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     companion object {

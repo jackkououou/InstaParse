@@ -4,9 +4,9 @@
 
 
     <item
-        android:id="@+id/action_profile"
-        android:icon="@drawable/ic_baseline_person_outline_24"
-        android:title="Profile"
+        android:id="@+id/action_home"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Home"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_compose"
@@ -14,8 +14,10 @@
         android:title="Compose"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_home"
-        android:icon="@android:drawable/ic_menu_compass"
-        android:title="Home"
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_baseline_person_outline_24"
+        android:title="Profile"
         app:showAsAction="always" />
+
+
 </menu>
